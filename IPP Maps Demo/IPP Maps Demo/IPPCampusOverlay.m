@@ -13,7 +13,7 @@
 @synthesize coordinate;
 @synthesize boundingMapRect;
 
-- (instancetype)initWithCampus:(IPPCampus *)campus {
+- (id)initWithCampus:(IPPCampus *)campus {
     self = [super init];
     if (self) {
         self->boundingMapRect = campus.overlayBoundingMapRect;

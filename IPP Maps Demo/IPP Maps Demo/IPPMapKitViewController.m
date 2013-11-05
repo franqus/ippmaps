@@ -30,8 +30,8 @@
 		
 		self->mapView = [[MKMapView alloc] initWithFrame: CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.height,[UIScreen mainScreen].bounds.size.width)];
 		
-		//init mapView with location of Mannheim
-		CLLocationCoordinate2D coord = {.latitude =  34.4248, .longitude =  -118.5971};
+		//init mapView with location of Mannheim //{49.470843,8.480973}
+		CLLocationCoordinate2D coord = {.latitude =  49.470843, .longitude =  8.480973};
 		//34.4248,-118.5971
 		//49.469268,8.483334
 		MKCoordinateSpan span = {.latitudeDelta =  0.01, .longitudeDelta =  0.001};
@@ -143,6 +143,16 @@
 		[self->customAnnotationControl addTarget:self action:@selector(toggleCustomAnnotation:) forControlEvents:UIControlEventValueChanged];
 		[self->controlContainerView addSubview:self->customAnnotationControl];
 		
+		UILabel* overlaysControlLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, customAnnotationControlLabel.frame.origin.y+customAnnotationControlLabel.frame.size.height+10, 147, 31)];
+		[overlaysControlLabel setFont:[UIFont systemFontOfSize:22]];
+		[overlaysControlLabel setText:@"Overlays:"];
+		[self->controlContainerView addSubview:overlaysControlLabel];
+		
+		self->overlaysControl = [[UISwitch alloc] initWithFrame:CGRectMake(self->controlContainerView.frame.size.width-61, overlaysControlLabel.frame.origin.y, 50, 31)];
+		[self->overlaysControl setOn:YES];
+		[self->overlaysControl addTarget:self action:@selector(toggleOverlays:) forControlEvents:UIControlEventValueChanged];
+		[self->controlContainerView addSubview:self->overlaysControl];
+		
 		self->goToRandomLocationControl = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 		[self->goToRandomLocationControl setBackgroundColor:[UIColor clearColor]];
 		[self->goToRandomLocationControl.layer setBorderWidth:1.0f];
@@ -150,7 +160,7 @@
 		 .CGColor];
 		[self->goToRandomLocationControl.layer setCornerRadius:5.0f];
 		
-		[self->goToRandomLocationControl setFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->customAnnotationControl.frame.origin.y+self->customAnnotationControl.frame.size.height+10, 200, 30)];
+		[self->goToRandomLocationControl setFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->overlaysControl.frame.origin.y+self->overlaysControl.frame.size.height+10, 200, 30)];
 		[self->goToRandomLocationControl setTitle:@"Random Location" forState:UIControlStateNormal];
 		[self->goToRandomLocationControl addTarget:self action:@selector(goToRandomLocation:) forControlEvents:UIControlEventTouchUpInside];
 		[self->controlContainerView addSubview:self->goToRandomLocationControl];
@@ -190,9 +200,12 @@
 //		MKCircle *circle = [MKCircle circleWithCenterCoordinate:coord radius:200];
 //		[self->mapView addOverlay:circle];
 		
-		IPPCampusOverlay* overlay = [[IPPCampusOverlay alloc] initWithCampus:self->campus];
-		[self->mapView addOverlay:overlay];
+		IPPCampusOverlay* campusOverlay = [[IPPCampusOverlay alloc] initWithCampus:self->campus];
+		self->overlaysArray = [[NSMutableArray alloc] initWithObjects:campusOverlay, nil];
+		
+		[self->mapView addOverlay:campusOverlay];
 
+		
 		CLLocationCoordinate2D  points[4];
 		points[0] = CLLocationCoordinate2DMake(49.47366,8.473957);
 		points[1] = CLLocationCoordinate2DMake(49.474538,8.481445);
@@ -200,7 +213,7 @@
 		points[3] = CLLocationCoordinate2DMake(49.469491,8.472004);
 		MKPolygon* polygon = [MKPolygon polygonWithCoordinates:points count:4];
 		polygon.title = @"Leeds";
-		[self->mapView addOverlay:polygon];
+//		[self->mapView addOverlay:polygon];
 	}
     return self;
 }
@@ -265,6 +278,14 @@
 	}
 	else if(![sender isOn]){
 		[self->mapView removeAnnotations:self->companyAnnotationsArray];
+	}
+}
+
+-(void)toggleOverlays:(UISwitch*)sender{
+	if([sender isOn]){
+		[self->mapView addOverlays:self->overlaysArray];
+	}else if(![sender isOn]){
+		[self->mapView removeOverlays:self->overlaysArray];
 	}
 }
 
@@ -395,12 +416,12 @@
 		polyView.lineWidth = 3;
 //		UIImageView* ivTest = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Campus_ov"]];
 //		[polyView addSubview:ivTest];
-		[polyView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"overlay_park"] ]];
+		[polyView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Campus_ov"] ]];
 		return polyView;
 	}
 	
     if ([overlay isKindOfClass:IPPCampusOverlay.class]) {
-        UIImage *magicMountainImage = [UIImage imageNamed:@"overlay_park"];
+        UIImage *magicMountainImage = [UIImage imageNamed:@"Campus_ov"];
         IPPCampusOverlayView *overlayView = [[IPPCampusOverlayView alloc] initWithOverlay:overlay overlayImage:magicMountainImage];
 		
         return overlayView;

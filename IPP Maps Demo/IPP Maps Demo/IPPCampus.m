@@ -9,7 +9,7 @@
 #import "IPPCampus.h"
 
 @implementation IPPCampus
-- (instancetype)initWithFilename:(NSString *)filename {
+- (id)initWithFilename:(NSString *)filename {
     self = [super init];
     if (self) {
         NSString *filePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"plist"];
@@ -27,16 +27,16 @@
         CGPoint overlayBottomLeftPoint = CGPointFromString(properties[@"overlayBottomLeftCoord"]);
         _overlayBottomLeftCoordinate = CLLocationCoordinate2DMake(overlayBottomLeftPoint.x, overlayBottomLeftPoint.y);
 		
-        NSArray *boundaryPoints = properties[@"boundary"];
-		
-        _boundaryPointsCount = boundaryPoints.count;
-		
-        _boundary = malloc(sizeof(CLLocationCoordinate2D)*_boundaryPointsCount);
-		
-        for(int i = 0; i < _boundaryPointsCount; i++) {
-            CGPoint p = CGPointFromString(boundaryPoints[i]);
-            _boundary[i] = CLLocationCoordinate2DMake(p.x,p.y);
-        }
+//        NSArray *boundaryPoints = properties[@"boundary"];
+//		
+//        _boundaryPointsCount = boundaryPoints.count;
+//		
+//        _boundary = malloc(sizeof(CLLocationCoordinate2D)*_boundaryPointsCount);
+//		
+//        for(int i = 0; i < _boundaryPointsCount; i++) {
+//            CGPoint p = CGPointFromString(boundaryPoints[i]);
+//            _boundary[i] = CLLocationCoordinate2DMake(p.x,p.y);
+//        }
     }
 	
     return self;

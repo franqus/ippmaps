@@ -27,12 +27,14 @@
 	UISwitch* userLocationControl;
 	UISwitch* annotationControl;
 	UISwitch* customAnnotationControl;
+	UISwitch* overlaysControl;
 	UIButton* goToRandomLocationControl;
 	UITextView* randomLocationTextView;
 	IPPMapKitAnnotation* randomLocationAnnot;
 	
 	NSMutableArray* universityAnnotationsArray;
 	NSMutableArray* companyAnnotationsArray;
+	NSMutableArray* overlaysArray;
 	
 	IPPCampus* campus;
 }

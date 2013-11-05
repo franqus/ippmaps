@@ -12,6 +12,6 @@
 @class IPPCampus;
 @interface IPPCampusOverlay : NSObject<MKOverlay>
 
-- (instancetype)initWithCampus:(IPPCampus*)campus;
+- (id)initWithCampus:(IPPCampus*)campus;
 
 @end

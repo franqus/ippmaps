@@ -16,10 +16,11 @@
 
 @implementation IPPCampusOverlayView
 
-- (instancetype)initWithOverlay:(id<MKOverlay>)overlay overlayImage:(UIImage *)overlayImage {
+- (instancetype)initWithOverlay:(id<MKOverlay>)overlay overlayImage:(UIImage *)theOverlayImage {
     self = [super initWithOverlay:overlay];
     if (self) {
-        overlayImage = overlayImage;
+        _overlayImage = theOverlayImage;
+//		[self setBackgroundColor:[UIColor colorWithRed:0 green:1 blue:0 alpha:0.2]];
     }
 	
     return self;
