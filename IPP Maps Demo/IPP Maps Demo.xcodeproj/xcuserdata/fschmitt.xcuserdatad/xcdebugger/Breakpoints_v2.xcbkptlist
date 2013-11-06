@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController.m"
-            timestampString = "405345033.290924"
+            timestampString = "405415161.324918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-init"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController.m"
-            timestampString = "405345033.290924"
+            timestampString = "405415161.324918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "-mapView:viewForOverlay:"
             landmarkType = "5">
          </BreakpointContent>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController.m"
-            timestampString = "405345033.290924"
+            timestampString = "405415161.324918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "-mapView:viewForOverlay:"
             landmarkType = "5">
          </BreakpointContent>
@@ -116,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController.m"
-            timestampString = "405345033.290924"
+            timestampString = "405415161.324918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
             landmarkName = "-mapView:viewForOverlay:"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,6 +154,38 @@
             startingLineNumber = "24"
             endingLineNumber = "24"
             landmarkName = "-initWithOverlay:overlayImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IPP Maps Demo/IPPMapKitViewController.m"
+            timestampString = "405415161.324918"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
+            landmarkName = "-mapView:regionWillChangeAnimated:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IPP Maps Demo/IPPMapKitViewController.m"
+            timestampString = "405415161.324918"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
+            landmarkName = "-goToRandomLocation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

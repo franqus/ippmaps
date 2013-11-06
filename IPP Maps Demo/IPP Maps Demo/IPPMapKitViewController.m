@@ -153,6 +153,19 @@
 		[self->overlaysControl addTarget:self action:@selector(toggleOverlays:) forControlEvents:UIControlEventValueChanged];
 		[self->controlContainerView addSubview:self->overlaysControl];
 		
+		
+		self->searchTextfield = [[UITextField alloc] initWithFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->overlaysControl.frame.origin.y+self->overlaysControl.frame.size.height+10, 200, 30)];
+		[self->searchTextfield setText:@"Search..."];
+		[self->searchTextfield setDelegate:self];
+		[self->searchTextfield setBackgroundColor:[UIColor whiteColor]];
+		[self->searchTextfield setTextAlignment:NSTextAlignmentCenter];
+		self->searchTextfield.layer.cornerRadius = 5.0;
+		self->searchTextfield.layer.borderColor = [UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0].CGColor;
+		[self->searchTextfield setTextColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0]];
+		self->searchTextfield.layer.borderWidth = 1.0f;
+		[self->controlContainerView addSubview:self->searchTextfield];
+		
+		
 		self->goToRandomLocationControl = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 		[self->goToRandomLocationControl setBackgroundColor:[UIColor clearColor]];
 		[self->goToRandomLocationControl.layer setBorderWidth:1.0f];
@@ -160,13 +173,16 @@
 		 .CGColor];
 		[self->goToRandomLocationControl.layer setCornerRadius:5.0f];
 		
-		[self->goToRandomLocationControl setFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->overlaysControl.frame.origin.y+self->overlaysControl.frame.size.height+10, 200, 30)];
+		[self->goToRandomLocationControl setFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->searchTextfield.frame.origin.y+self->searchTextfield.frame.size.height+10, 200, 30)];
 		[self->goToRandomLocationControl setTitle:@"Random Location" forState:UIControlStateNormal];
 		[self->goToRandomLocationControl addTarget:self action:@selector(goToRandomLocation:) forControlEvents:UIControlEventTouchUpInside];
 		[self->controlContainerView addSubview:self->goToRandomLocationControl];
 		
 		self->randomLocationTextView = [[UITextView alloc] initWithFrame:CGRectMake(self->controlContainerView.frame.size.width/2-100, self->goToRandomLocationControl.frame.origin.y+self->goToRandomLocationControl.frame.size.height+5, 200, 200)];
 		[self->controlContainerView addSubview:self->randomLocationTextView];
+		
+		
+
 				
 		IPPMapKitAnnotation *hsMannheimAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D: CLLocationCoordinate2DMake(49.469268,8.483334) andTitle:@"HS Mannheim"];
 		[self->mapView addAnnotation:hsMannheimAnnot];
@@ -214,6 +230,9 @@
 		MKPolygon* polygon = [MKPolygon polygonWithCoordinates:points count:4];
 		polygon.title = @"Leeds";
 //		[self->mapView addOverlay:polygon];
+		
+		
+		self->randomLocationsArray = [[NSMutableArray alloc] init];
 	}
     return self;
 }
@@ -314,6 +333,7 @@
 				
 				[self->mapView setRegion:region animated:YES];
 				[self->mapView addAnnotation:self->randomLocationAnnot];
+				[self->randomLocationsArray addObject:self->randomLocationAnnot];
 
 				[self->randomLocationTextView setText:[NSString stringWithFormat:@"name = %@\ncountry = %@\nadministrativeArea = %@\nlocality = %@\npostalCode = %@\nthoroughfare = %@\nareasOfInterest = %@", placemark.name, placemark.country, placemark.administrativeArea, placemark.locality, placemark.postalCode, placemark.thoroughfare, placemark.areasOfInterest]];
 			}else{
@@ -325,6 +345,35 @@
 		
 	}];
 
+}
+
+-(BOOL)goToLocation:(NSString*)search{
+	__block BOOL result = NO;
+	CLGeocoder* geocoder = [[CLGeocoder alloc] init];
+	[geocoder geocodeAddressString:search completionHandler:^(NSArray *placemarks, NSError *error) {
+		NSLog(@"placemarks = %@", placemarks);
+		if(placemarks){
+			CLPlacemark* placemark = [[CLPlacemark alloc] initWithPlacemark:[placemarks firstObject]];
+			IPPMapKitAnnotation* resultAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D:[[placemark location] coordinate] andTitle:[placemark name]];
+		
+			MKCoordinateSpan span = {.latitudeDelta =  50, .longitudeDelta =  50};
+			MKCoordinateRegion region = {[[placemark location] coordinate], span};
+			
+			[self->mapView setRegion:region animated:YES];
+			[self->mapView addAnnotation:resultAnnot];
+//				[self->randomLocationsArray addObject:resultAnnot];
+			
+			[self->randomLocationTextView setText:[NSString stringWithFormat:@"name = %@\ncountry = %@\nadministrativeArea = %@\nlocality = %@\npostalCode = %@\nthoroughfare = %@\nareasOfInterest = %@", placemark.name, placemark.country, placemark.administrativeArea, placemark.locality, placemark.postalCode, placemark.thoroughfare, placemark.areasOfInterest]];
+		
+			result = YES;
+		}else{
+			[self->randomLocationTextView setText:@"The Internet connection appears to be offline."];
+		}
+		
+	}];
+	
+	return result;
+	
 }
 
 - (void)viewDidLoad
@@ -362,7 +411,9 @@
 #pragma mark MKMapViewDelegate methods
 -(void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
 	[self->randomLocationTextView setText:@""];
-	[self->mapView removeAnnotation:self->randomLocationAnnot];
+//	[self->mapView removeAnnotation:self->randomLocationAnnot];
+	[self->mapView removeAnnotations:self->randomLocationsArray];
+	[self->randomLocationsArray removeAllObjects];
 }
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
@@ -433,6 +484,26 @@
 //    circleView.strokeColor = [UIColor redColor];
 //    circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.4];
 //    return circleView;
+}
+
+
+#pragma mark -
+#pragma mark UITextFieldDelegate methods
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+	if ([textField.text isEqualToString:@"Search..."]) {
+		textField.text = @"";
+	}
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+	if ([textField.text isEqualToString:@""]) {
+		textField.text = @"Search...";
+	}
+}
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+	return [self goToLocation:textField.text];
 }
 
 @end

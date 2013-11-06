@@ -13,7 +13,7 @@
 #import "IPPCampus.h"
 
 
-@interface IPPMapKitViewController : UIViewController<MKMapViewDelegate>
+@interface IPPMapKitViewController : UIViewController<MKMapViewDelegate, UITextFieldDelegate>
 {
 	MKMapView* mapView;
 	UIView* controlContainerView;
@@ -30,11 +30,16 @@
 	UISwitch* overlaysControl;
 	UIButton* goToRandomLocationControl;
 	UITextView* randomLocationTextView;
+	
+	UITextField* searchTextfield;
+	
 	IPPMapKitAnnotation* randomLocationAnnot;
+	
 	
 	NSMutableArray* universityAnnotationsArray;
 	NSMutableArray* companyAnnotationsArray;
 	NSMutableArray* overlaysArray;
+	NSMutableArray* randomLocationsArray;
 	
 	IPPCampus* campus;
 }
