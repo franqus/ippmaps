@@ -7,36 +7,34 @@
 //
 
 #import "IPPAppDelegate.h"
-#import <GoogleMaps/GoogleMaps.h>
 
 @implementation IPPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	//google maps API key
-	[GMSServices provideAPIKey:@"AIzaSyATq-aWqjLSvM6o6iZ5tr4f56fk604uw_o"];
-	
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-	
-	
-	self->mainVC = [[IPPMainViewController alloc] init];
-	[self.window setRootViewController:self->mainVC];
-	
-	
-	self->mapKitVC = [[IPPMapKitViewController alloc] init];
-	self->googleMapsVC = [[IPPGoogleMapsViewController alloc] init];
-	self->bingMapsVC = [[IPPBingMapsViewController alloc] init];
-	
-	NSArray* vcArray = @[self->mapKitVC, self->googleMapsVC, self->bingMapsVC];
-	
-	[self->mainVC setViewControllers:vcArray];
-//	self->mainVC.viewControllers = [NSArray arrayWithObjects:self->mapKitVC, self->googleMapsVC, self->bingMapsVC, nil];
-	[[self->mainVC tabBarController] setViewControllers:vcArray animated:YES];
 
-	
-	[self.window addSubview: self->mainVC.view];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self->controlVC = [[IPPMapControlsViewController alloc] init];
+    self->mapKitVC = [[IPPMapKitViewController alloc] init];
+    
+    [self->controlVC setDelegate:self->mapKitVC];
+
+    UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:self->controlVC];
+    
+    UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:self->mapKitVC];
+    
+    UISplitViewController* splitViewController = [[UISplitViewController alloc] init];
+
+    splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
+    splitViewController.delegate = self->mapKitVC;
+    
+    
+    
+    [self.window setRootViewController:(UIViewController*)splitViewController];  // that's the ticket
+    
+
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IPPMainViewController : UITabBarController
-{
+@interface IPPMainViewController : UITabBarController <UISplitViewControllerDelegate>
 
-}
+@property (strong, nonatomic) id detailItem;
+
+@property (weak, nonatomic) UILabel *detailDescriptionLabel;
+
 @end

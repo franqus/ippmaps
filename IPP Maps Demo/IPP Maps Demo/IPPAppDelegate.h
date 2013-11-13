@@ -9,16 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "IPPMainViewController.h"
 #import "IPPMapKitViewController.h"
-#import "IPPGoogleMapsViewController.h"
-#import "IPPBingMapsViewController.h"
+
+#import "IPPMapControlsViewController.h"
+
 
 
 @interface IPPAppDelegate : UIResponder <UIApplicationDelegate>
 {
 	IPPMainViewController* mainVC;
+    IPPMapControlsViewController* controlVC;
+    
 	IPPMapKitViewController* mapKitVC;
-	IPPGoogleMapsViewController* googleMapsVC;
-	IPPBingMapsViewController* bingMapsVC;
 }
 @property (strong, nonatomic) UIWindow *window;
 
