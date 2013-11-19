@@ -24,6 +24,14 @@
     if (self) {
 		self.title = @"MainVC";
 		[self.view setBackgroundColor:[UIColor whiteColor]];
+		
+//		UIBarButtonItem *buttonTwo = [[UIBarButtonItem alloc] initWithTitle:@"Button Two" style:UIBarButtonItemStyleBordered target:self action:@selector(action)];
+////		[self.navigationItem setRightBarButtonItem:buttonTwo animated:YES];
+//		
+//		NSArray *buttons = [NSArray arrayWithObjects: buttonTwo, nil];
+//		self.toolbarItems = buttons;
+		
+
     
 	}
     return self;
@@ -70,7 +78,10 @@
 {
     barButtonItem.title = NSLocalizedString(@"Map Controls", @"Map controls split view button");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+	
+
     self.masterPopoverController = popoverController;
+	
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem

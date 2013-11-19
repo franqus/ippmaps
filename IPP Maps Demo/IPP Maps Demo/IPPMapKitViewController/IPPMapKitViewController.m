@@ -26,9 +26,18 @@
     if (self) {
         
         // Custom initialization
-		[self setTitle:@"MapKit"];
+		[self setTitle:@"IPP Maps"];
 		[self.tabBarItem setImage:[UIImage imageNamed:@"MapKit_Logo"]];
 		[self.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MapKit_Logo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+				
+		UIBarButtonItem *popoverBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Direction" style:UIBarButtonItemStylePlain target:self action:@selector(directionsPopoverBtn_tapped:)];
+		//initWithBarButtonSystemItem:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
+		
+		[self.navigationItem setRightBarButtonItem:popoverBarButtonItem animated:YES];
+		//[[UIBarButtonItem alloc] initWithCustomView:popOverButton] animated:YES];
+		
+		self->directionRequest = [[MKDirectionsRequest alloc] init];
+
 		
 		self->mapView = [[MKMapView alloc] initWithFrame: self.view.frame];
 		
@@ -109,10 +118,50 @@
 		
 		
 		self->randomLocationsArray = [[NSMutableArray alloc] init];
+		
+		self->directionsArray = [[NSMutableArray alloc] init];
+		
+	
 	}
     return self;
 }
 
+-(void)directionsPopoverBtn_tapped:(UIBarButtonItem*)sender{
+	
+	self->popoverVC = [[IPPMapKitPopverViewController alloc] init];
+	[self->popoverVC setDelegate:self];
+	
+	self->directionsPopoverController = [[UIPopoverController alloc] initWithContentViewController:self->popoverVC];
+	[self->directionsPopoverController setDelegate:self];
+	[self->directionsPopoverController setPopoverContentSize:CGSizeMake(240, 120) animated:YES];
+	[self->directionsPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+-(void)showRoute:(MKDirectionsResponse *)response
+{
+    for (MKRoute *route in response.routes)
+    {
+        [self->mapView
+		 addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+    }
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
+{
+	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
+		return nil;
+	}
+	
+	if([overlay isKindOfClass:[MKPolygon class]]){
+		return nil;
+	}
+	
+	MKPolylineRenderer *renderer =
+	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
+	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
+	renderer.lineWidth = 3.0;
+	return renderer;
+}
 
 -(void)changeMapType:(UISegmentedControl*)sender{
 	switch (sender.selectedSegmentIndex) {
@@ -179,8 +228,10 @@
 -(void)toggleOverlays:(UISwitch*)sender{
 	if([sender isOn]){
 		[self->mapView addOverlays:self->overlaysArray];
+		[self->mapView addOverlays:self->directionsArray];
 	}else if(![sender isOn]){
 		[self->mapView removeOverlays:self->overlaysArray];
+		[self->mapView removeOverlays:self->directionsArray];
 	}
 }
 
@@ -410,7 +461,9 @@
 {
     barButtonItem.title = NSLocalizedString(@"Map Controls", @"Map controls split view button");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
+
+	self.masterPopoverController = popoverController;
+	
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
@@ -419,5 +472,82 @@
     self.masterPopoverController = nil;
 }
 
+#pragma mark -
+#pragma mark IPPMapKitPopoverViewControllerDelegate
+
+-(void)setTravelMode:(UISegmentedControl *)sender{
+	switch (sender.selectedSegmentIndex) {
+		case 0:
+			self->directionRequest.transportType = MKDirectionsTransportTypeWalking;
+			break;
+		
+		case 1:
+			self->directionRequest.transportType = MKDirectionsTransportTypeAutomobile;
+			break;
+			
+//		case 2:
+//			self->directionRequest.transportType = MKDirectionsTransportTypeAny;
+//			break;
+			
+		default:
+			break;
+	}
+	
+}
+
+-(void)setSource:(UITextField *)sender{
+	//source
+	MKLocalSearchRequest* searchReq = [[MKLocalSearchRequest alloc] init];
+    searchReq.naturalLanguageQuery = sender.text;
+    searchReq.region = self->mapView.region;
+    
+    MKLocalSearch* sourceSearch = [[MKLocalSearch alloc] initWithRequest:searchReq];
+    
+    [sourceSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+		self->directionRequest.source = [response.mapItems firstObject];
+    }];
+
+}
+
+-(void)setDestination:(UITextField *)sender{
+	//destination
+	MKLocalSearchRequest* searchReq = [[MKLocalSearchRequest alloc] init];
+    searchReq.naturalLanguageQuery = sender.text;
+    searchReq.region = self->mapView.region;
+    
+    MKLocalSearch* destinationSearch = [[MKLocalSearch alloc] initWithRequest:searchReq];
+    [destinationSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+		self->directionRequest.destination = [response.mapItems firstObject];
+    }];
+}
+
+-(void)triggerDirection:(UIButton*)sender{// withSource:(UITextField*)sourceField andDestination:(UITextField*)destinationField{
+	
+
+	[self->mapView removeOverlays:self->directionsArray];
+	[self->directionsArray removeAllObjects];
+	[self->directionsPopoverController dismissPopoverAnimated:YES];
+	
+	NSLog(@"self->directionRequest = %@",self->directionRequest);
+
+	MKDirections *directions =
+	[[MKDirections alloc] initWithRequest:self->directionRequest];
+	
+	[directions calculateDirectionsWithCompletionHandler:
+	 ^(MKDirectionsResponse *response, NSError *error) {
+		 if (error) {
+			 // Handle Error
+			 NSLog(@"The Internet connection appears to be offline.");
+		 } else {
+			 for (MKRoute *route in response.routes)
+			 {
+				 [self->mapView
+				  addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+				 [self->directionsArray addObject:route.polyline];
+			 }
+		 }
+	 }];
+
+}
 
 @end

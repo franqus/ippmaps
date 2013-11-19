@@ -12,27 +12,33 @@
 #import "IPPMapKitCustomAnnotation.h"
 #import "IPPCampus.h"
 #import "IPPMapControlsViewController.h"
+#import "IPPMapKitPopverViewController.h"
 
 
-@interface IPPMapKitViewController : UIViewController<MKMapViewDelegate, UITextFieldDelegate, UISplitViewControllerDelegate, IPPMapControlsViewControllerDelegate>
+@interface IPPMapKitViewController : UIViewController<MKMapViewDelegate, UITextFieldDelegate, UISplitViewControllerDelegate, IPPMapControlsViewControllerDelegate, UIPopoverControllerDelegate, IPPMapKitPopverViewControllerDelegate>
 {
 	MKMapView* mapView;
-	UIView* controlContainerView;
-	UISegmentedControl* mapTypeControl;
-	UISwitch* scrollControl;
-	UISwitch* zoomControl;
-	UISwitch* rotationControl;
-	UISwitch* pitchControl;
-	UISwitch* buildingsControl;
-	UISwitch* poisControl;
-	UISwitch* userLocationControl;
-	UISwitch* annotationControl;
-	UISwitch* customAnnotationControl;
-	UISwitch* overlaysControl;
+	
+	IPPMapKitPopverViewController* popoverVC;
+	UIPopoverController* directionsPopoverController;
+	MKDirectionsRequest* directionRequest;
+	NSMutableArray* directionsArray;
+//	UIView* controlContainerView;
+//	UISegmentedControl* mapTypeControl;
+//	UISwitch* scrollControl;
+//	UISwitch* zoomControl;
+//	UISwitch* rotationControl;
+//	UISwitch* pitchControl;
+//	UISwitch* buildingsControl;
+//	UISwitch* poisControl;
+//	UISwitch* userLocationControl;
+//	UISwitch* annotationControl;
+//	UISwitch* customAnnotationControl;
+//	UISwitch* overlaysControl;
 	UIButton* goToRandomLocationControl;
 	UITextView* randomLocationTextView;
-	
-	UITextField* searchTextfield;
+//
+//	UITextField* searchTextfield;
 	
 	IPPMapKitAnnotation* randomLocationAnnot;
 	

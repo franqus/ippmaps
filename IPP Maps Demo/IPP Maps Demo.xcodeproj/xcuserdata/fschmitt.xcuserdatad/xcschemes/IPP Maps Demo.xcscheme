@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "404CA277180D6B01001ADE13"
-               BuildableName = "IPP Maps Demo.app"
-               BlueprintName = "IPP Maps Demo"
+               BuildableName = "IPP Maps.app"
+               BlueprintName = "IPP Maps"
                ReferencedContainer = "container:IPP Maps Demo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "404CA277180D6B01001ADE13"
-            BuildableName = "IPP Maps Demo.app"
-            BlueprintName = "IPP Maps Demo"
+            BuildableName = "IPP Maps.app"
+            BlueprintName = "IPP Maps"
             ReferencedContainer = "container:IPP Maps Demo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "404CA277180D6B01001ADE13"
-            BuildableName = "IPP Maps Demo.app"
-            BlueprintName = "IPP Maps Demo"
+            BuildableName = "IPP Maps.app"
+            BlueprintName = "IPP Maps"
             ReferencedContainer = "container:IPP Maps Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,8 +80,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "404CA277180D6B01001ADE13"
-            BuildableName = "IPP Maps Demo.app"
-            BlueprintName = "IPP Maps Demo"
+            BuildableName = "IPP Maps.app"
+            BlueprintName = "IPP Maps"
             ReferencedContainer = "container:IPP Maps Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

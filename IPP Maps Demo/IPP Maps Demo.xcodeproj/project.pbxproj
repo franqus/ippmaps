@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		402B3A9D183BCFD700D804D9 /* IPPMapKitPopverViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 402B3A9B183BCFD700D804D9 /* IPPMapKitPopverViewController.h */; };
+		402B3A9E183BCFD700D804D9 /* IPPMapKitPopverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402B3A9C183BCFD700D804D9 /* IPPMapKitPopverViewController.m */; };
+		402D0346183B87540051A423 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 402D0345183B87540051A423 /* MapKit.framework */; };
 		404CA27C180D6B01001ADE13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA27B180D6B01001ADE13 /* Foundation.framework */; };
 		404CA27E180D6B01001ADE13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA27D180D6B01001ADE13 /* CoreGraphics.framework */; };
 		404CA280180D6B01001ADE13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA27F180D6B01001ADE13 /* UIKit.framework */; };
@@ -45,7 +48,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		404CA278180D6B01001ADE13 /* IPP Maps Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IPP Maps Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		402B3A9B183BCFD700D804D9 /* IPPMapKitPopverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPMapKitPopverViewController.h; sourceTree = "<group>"; };
+		402B3A9C183BCFD700D804D9 /* IPPMapKitPopverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPMapKitPopverViewController.m; sourceTree = "<group>"; };
+		402D0345183B87540051A423 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		404CA278180D6B01001ADE13 /* IPP Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IPP Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		404CA27B180D6B01001ADE13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		404CA27D180D6B01001ADE13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		404CA27F180D6B01001ADE13 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -103,6 +109,7 @@
 				404CA2D0180D75DE001ADE13 /* OpenGLES.framework in Frameworks */,
 				404CA2CC180D75D3001ADE13 /* libicucore.dylib in Frameworks */,
 				404CA2CA180D75CA001ADE13 /* libc++.dylib in Frameworks */,
+				402D0346183B87540051A423 /* MapKit.framework in Frameworks */,
 				404CA2C8180D75BD001ADE13 /* ImageIO.framework in Frameworks */,
 				404CA2C6180D75B8001ADE13 /* GLKit.framework in Frameworks */,
 				404CA2C4180D75B1001ADE13 /* CoreText.framework in Frameworks */,
@@ -128,7 +135,7 @@
 		404CA279180D6B01001ADE13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				404CA278180D6B01001ADE13 /* IPP Maps Demo.app */,
+				404CA278180D6B01001ADE13 /* IPP Maps.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,6 +143,7 @@
 		404CA27A180D6B01001ADE13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				402D0345183B87540051A423 /* MapKit.framework */,
 				404CA2E4180D89F1001ADE13 /* libxml2.dylib */,
 				404CA2D3180D760A001ADE13 /* SystemConfiguration.framework */,
 				404CA2D1180D75E5001ADE13 /* QuartzCore.framework */,
@@ -191,6 +199,8 @@
 				404DA0881833542C00E96919 /* Overlays */,
 				404DA0861833542C00E96919 /* IPPMapKitViewController.h */,
 				404DA0871833542C00E96919 /* IPPMapKitViewController.m */,
+				402B3A9B183BCFD700D804D9 /* IPPMapKitPopverViewController.h */,
+				402B3A9C183BCFD700D804D9 /* IPPMapKitPopverViewController.m */,
 			);
 			path = IPPMapKitViewController;
 			sourceTree = "<group>";
@@ -228,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				404DA0921833542C00E96919 /* IPPMapKitCustomAnnotation.h in Headers */,
+				402B3A9D183BCFD700D804D9 /* IPPMapKitPopverViewController.h in Headers */,
 				404DA0941833542C00E96919 /* IPPMapKitViewController.h in Headers */,
 				404DA0901833542C00E96919 /* IPPMapKitAnnotation.h in Headers */,
 				404DA09B1833542C00E96919 /* IPPCampusOverlayView.h in Headers */,
@@ -239,9 +250,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		404CA277180D6B01001ADE13 /* IPP Maps Demo */ = {
+		404CA277180D6B01001ADE13 /* IPP Maps */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 404CA2A4180D6B02001ADE13 /* Build configuration list for PBXNativeTarget "IPP Maps Demo" */;
+			buildConfigurationList = 404CA2A4180D6B02001ADE13 /* Build configuration list for PBXNativeTarget "IPP Maps" */;
 			buildPhases = (
 				404CA274180D6B01001ADE13 /* Sources */,
 				404CA275180D6B01001ADE13 /* Frameworks */,
@@ -252,9 +263,9 @@
 			);
 			dependencies = (
 			);
-			name = "IPP Maps Demo";
+			name = "IPP Maps";
 			productName = "IPP Maps Demo";
-			productReference = 404CA278180D6B01001ADE13 /* IPP Maps Demo.app */;
+			productReference = 404CA278180D6B01001ADE13 /* IPP Maps.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -266,6 +277,15 @@
 				CLASSPREFIX = IPP;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "HS Mannheim";
+				TargetAttributes = {
+					404CA277180D6B01001ADE13 = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 404CA273180D6B01001ADE13 /* Build configuration list for PBXProject "IPP Maps Demo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -279,7 +299,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				404CA277180D6B01001ADE13 /* IPP Maps Demo */,
+				404CA277180D6B01001ADE13 /* IPP Maps */,
 			);
 		};
 /* End PBXProject section */
@@ -309,6 +329,7 @@
 				404DA0951833542C00E96919 /* IPPMapKitViewController.m in Sources */,
 				404DA0931833542C00E96919 /* IPPMapKitCustomAnnotation.m in Sources */,
 				404DA09A1833542C00E96919 /* IPPCampusOverlay.m in Sources */,
+				402B3A9E183BCFD700D804D9 /* IPPMapKitPopverViewController.m in Sources */,
 				404DA0911833542C00E96919 /* IPPMapKitAnnotation.m in Sources */,
 				404CA2AC180D6B3C001ADE13 /* IPPMainViewController.m in Sources */,
 				40A4D3BB182B6AE500677996 /* IPPMapControlsViewController.m in Sources */,
@@ -466,7 +487,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		404CA2A4180D6B02001ADE13 /* Build configuration list for PBXNativeTarget "IPP Maps Demo" */ = {
+		404CA2A4180D6B02001ADE13 /* Build configuration list for PBXNativeTarget "IPP Maps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				404CA2A5180D6B02001ADE13 /* Debug */,

@@ -31,9 +31,10 @@
     splitViewController.delegate = self->mapKitVC;
     
     
+	
+    [self.window setRootViewController:(UIViewController*)splitViewController];
     
-    [self.window setRootViewController:(UIViewController*)splitViewController];  // that's the ticket
-    
+	
 
     [self.window makeKeyAndVisible];
     return YES;
@@ -66,4 +67,16 @@
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+	if ([MKDirectionsRequest isDirectionsRequestURL:url]) {
+		MKDirectionsRequest* directionsInfo = [[MKDirectionsRequest alloc] initWithContentsOfURL:url];
+		// TO DO: Plot and display the route using the
+		//   source and destination properties of directionsInfo.
+		return YES;
+	}
+	else {
+		// Handle other URL types...
+	}
+    return NO;
+}
 @end
