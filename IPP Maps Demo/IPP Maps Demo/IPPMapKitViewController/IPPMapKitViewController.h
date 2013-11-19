@@ -23,6 +23,7 @@
 	UIPopoverController* directionsPopoverController;
 	MKDirectionsRequest* directionRequest;
 	NSMutableArray* directionsArray;
+	NSMutableArray* directionsAnnotationArray;
 //	UIView* controlContainerView;
 //	UISegmentedControl* mapTypeControl;
 //	UISwitch* scrollControl;

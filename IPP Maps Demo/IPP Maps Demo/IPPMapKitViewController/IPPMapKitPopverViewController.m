@@ -30,12 +30,7 @@
 		
 		self->triggerDirectionButton = [[UIButton alloc] initWithFrame:CGRectMake(self->travelModeSegmentedControl.frame.origin.x+self->travelModeSegmentedControl.frame.size.width+10, self->travelModeSegmentedControl.frame.origin.y, 50, 30)];
 		[self->triggerDirectionButton setTitle:@"Go" forState:UIControlStateNormal];
-		//		[self->triggerDirectionButton setBackgroundColor:[UIColor clearColor]];
-		//		[self->triggerDirectionButton.layer setBorderWidth:1.0f];
 		[self->triggerDirectionButton setTitleColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0] forState:UIControlStateNormal];
-		//		[self->triggerDirectionButton.layer setBorderColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0]
-		//		 .CGColor];
-		//		[self->triggerDirectionButton.layer setCornerRadius:5.0f];
 		[self->triggerDirectionButton addTarget:self action:@selector(triggerDirection:) forControlEvents:UIControlEventTouchUpInside];
 		[self.view addSubview:self->triggerDirectionButton];
 		

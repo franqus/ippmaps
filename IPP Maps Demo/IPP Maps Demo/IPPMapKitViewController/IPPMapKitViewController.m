@@ -121,6 +121,8 @@
 		
 		self->directionsArray = [[NSMutableArray alloc] init];
 		
+		self->directionsAnnotationArray = [[NSMutableArray alloc] init];
+		
 	
 	}
     return self;
@@ -210,9 +212,11 @@
 -(void)toggleAnnotation:(UISwitch*)sender{
 	if([sender isOn]){
 		[self->mapView addAnnotations:self->universityAnnotationsArray];
+		[self->mapView addAnnotations:self->directionsAnnotationArray];
 	}
 	else if(![sender isOn]){
 		[self->mapView removeAnnotations:self->universityAnnotationsArray];
+		[self->mapView removeAnnotations:self->directionsAnnotationArray];
 	}
 }
 
@@ -485,10 +489,6 @@
 			self->directionRequest.transportType = MKDirectionsTransportTypeAutomobile;
 			break;
 			
-//		case 2:
-//			self->directionRequest.transportType = MKDirectionsTransportTypeAny;
-//			break;
-			
 		default:
 			break;
 	}
@@ -505,6 +505,7 @@
     
     [sourceSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
 		self->directionRequest.source = [response.mapItems firstObject];
+		
     }];
 
 }
@@ -518,12 +519,15 @@
     MKLocalSearch* destinationSearch = [[MKLocalSearch alloc] initWithRequest:searchReq];
     [destinationSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
 		self->directionRequest.destination = [response.mapItems firstObject];
+		
     }];
 }
 
 -(void)triggerDirection:(UIButton*)sender{// withSource:(UITextField*)sourceField andDestination:(UITextField*)destinationField{
 	
-
+	[self->mapView removeAnnotations:self->directionsAnnotationArray];
+	[self->directionsAnnotationArray removeAllObjects];
+	
 	[self->mapView removeOverlays:self->directionsArray];
 	[self->directionsArray removeAllObjects];
 	[self->directionsPopoverController dismissPopoverAnimated:YES];
@@ -532,6 +536,15 @@
 
 	MKDirections *directions =
 	[[MKDirections alloc] initWithRequest:self->directionRequest];
+	
+	
+	IPPMapKitAnnotation *sourceAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D: [[[self->directionRequest.source placemark] location] coordinate] andTitle:[[self->directionRequest.source placemark] name]];
+	[self->directionsAnnotationArray addObject:sourceAnnot];
+	
+	
+	IPPMapKitAnnotation *destinationAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D: [[[self->directionRequest.destination placemark] location] coordinate] andTitle:[[self->directionRequest.destination placemark] name]];
+	[self->directionsAnnotationArray addObject:destinationAnnot];
+
 	
 	[directions calculateDirectionsWithCompletionHandler:
 	 ^(MKDirectionsResponse *response, NSError *error) {
@@ -544,6 +557,8 @@
 				 [self->mapView
 				  addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
 				 [self->directionsArray addObject:route.polyline];
+				 [self->mapView addAnnotations:self->directionsAnnotationArray];
+				 
 			 }
 		 }
 	 }];

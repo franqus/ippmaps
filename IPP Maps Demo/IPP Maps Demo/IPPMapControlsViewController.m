@@ -305,8 +305,7 @@ typedef enum MapControl : NSUInteger {
                 UIButton* goToRandomLocationControl = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                 [goToRandomLocationControl setBackgroundColor:[UIColor clearColor]];
                 [goToRandomLocationControl.layer setBorderWidth:1.0f];
-                [goToRandomLocationControl.layer setBorderColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0]
-                 .CGColor];
+                [goToRandomLocationControl.layer setBorderColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0].CGColor];
                 [goToRandomLocationControl.layer setCornerRadius:5.0f];
                 [goToRandomLocationControl setFrame:CGRectMake(cell.contentView.frame.size.width-67, cell.contentView.frame.size.height/2-15, 53, 30)];
                 [goToRandomLocationControl setTitle:@"Go" forState:UIControlStateNormal];
@@ -330,8 +329,8 @@ typedef enum MapControl : NSUInteger {
                 [searchTextfield setBackgroundColor:[UIColor whiteColor]];
                 [searchTextfield setTextAlignment:NSTextAlignmentCenter];
                 searchTextfield.layer.cornerRadius = 5.0;
-                searchTextfield.layer.borderColor = [UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0].CGColor;
-                [searchTextfield setTextColor:[UIColor colorWithRed:9/255.f green:92/255.f blue:255/255.f alpha:1.0]];
+                searchTextfield.layer.borderColor = [UIColor colorWithRed:224/255.0f green:224/255.0f blue:224/255.0f alpha:1.0f].CGColor;
+                [searchTextfield setTextColor:[UIColor blackColor]];
                 searchTextfield.layer.borderWidth = 1.0f;
                 searchTextfield.returnKeyType = UIReturnKeySearch;
                 [cell.contentView addSubview:searchTextfield];
