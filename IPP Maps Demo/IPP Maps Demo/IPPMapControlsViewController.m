@@ -344,7 +344,6 @@ typedef enum MapControl : NSUInteger {
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSwitch];
             if( cell == nil ) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierTextview];
-//                cell.textLabel.text = [_objects objectAtIndex:[indexPath row]];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
 				
 				self->locationTextView = [[UITextView alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width/2-145, 0, 290, 150)];
@@ -377,12 +376,6 @@ typedef enum MapControl : NSUInteger {
 	}else{
 		return tableView.rowHeight;
 	}
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDate *object = _objects[indexPath.row];
-    self.detailViewController.detailItem = object;
 }
 
 -(void)changeMapType:(UISegmentedControl*)sender{

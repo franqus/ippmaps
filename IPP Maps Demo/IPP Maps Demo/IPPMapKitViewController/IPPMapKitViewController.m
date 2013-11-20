@@ -15,7 +15,6 @@
 
 @interface IPPMapKitViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
 @end
 
 @implementation IPPMapKitViewController
@@ -27,14 +26,10 @@
         
         // Custom initialization
 		[self setTitle:@"IPP Maps"];
-		[self.tabBarItem setImage:[UIImage imageNamed:@"MapKit_Logo"]];
-		[self.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MapKit_Logo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 				
+		// init directions popover
 		UIBarButtonItem *popoverBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Direction" style:UIBarButtonItemStylePlain target:self action:@selector(directionsPopoverBtn_tapped:)];
-		//initWithBarButtonSystemItem:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
-		
 		[self.navigationItem setRightBarButtonItem:popoverBarButtonItem animated:YES];
-		//[[UIBarButtonItem alloc] initWithCustomView:popOverButton] animated:YES];
 		
 		self->directionRequest = [[MKDirectionsRequest alloc] init];
 
@@ -66,7 +61,6 @@
 		[self->mapView addAnnotation:cambridgeAnnot];
 		
 		self->universityAnnotationsArray = [[NSMutableArray alloc] initWithObjects:hsMannheimAnnot, stanfordAnnot, mitAnnot, cambridgeAnnot, nil];
-		
 		
 		// Some custom annotations
 		IPPMapKitCustomAnnotation *hollywoodSign = [[IPPMapKitCustomAnnotation alloc] initWithCLLocationCoordinate2D: CLLocationCoordinate2DMake(34.133973,-118.32177) andTitle:@"Hollywood" andImage:[UIImage imageNamed:@"LosAngeles"]];
@@ -126,43 +120,6 @@
 	
 	}
     return self;
-}
-
--(void)directionsPopoverBtn_tapped:(UIBarButtonItem*)sender{
-	
-	self->popoverVC = [[IPPMapKitPopverViewController alloc] init];
-	[self->popoverVC setDelegate:self];
-	
-	self->directionsPopoverController = [[UIPopoverController alloc] initWithContentViewController:self->popoverVC];
-	[self->directionsPopoverController setDelegate:self];
-	[self->directionsPopoverController setPopoverContentSize:CGSizeMake(240, 120) animated:YES];
-	[self->directionsPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-}
-
--(void)showRoute:(MKDirectionsResponse *)response
-{
-    for (MKRoute *route in response.routes)
-    {
-        [self->mapView
-		 addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-    }
-}
-
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
-{
-	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
-		return nil;
-	}
-	
-	if([overlay isKindOfClass:[MKPolygon class]]){
-		return nil;
-	}
-	
-	MKPolylineRenderer *renderer =
-	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
-	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
-	renderer.lineWidth = 3.0;
-	return renderer;
 }
 
 -(void)changeMapType:(UISegmentedControl*)sender{
@@ -281,7 +238,7 @@
 									[addressDict objectForKey:@"ZIP"]
 									]];
 			}else{
-				[self goToRandomLocation:self->goToRandomLocationControl withTextView:textView];
+				[self goToRandomLocation:sender withTextView:textView];
 			}
 		}else{
 			[textView setText:@"The Internet connection appears to be offline."];
@@ -354,6 +311,17 @@
 	
 }
 
+-(void)directionsPopoverBtn_tapped:(UIBarButtonItem*)sender{
+	
+	self->popoverVC = [[IPPMapKitPopverViewController alloc] init];
+	[self->popoverVC setDelegate:self];
+	
+	self->directionsPopoverController = [[UIPopoverController alloc] initWithContentViewController:self->popoverVC];
+	[self->directionsPopoverController setDelegate:self];
+	[self->directionsPopoverController setPopoverContentSize:CGSizeMake(240, 120) animated:YES];
+	[self->directionsPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -370,7 +338,6 @@
 #pragma mark -
 #pragma mark MKMapViewDelegate methods
 -(void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
-	[self->randomLocationTextView setText:@""];
 	[self->mapView removeAnnotations:self->randomLocationsArray];
 	[self->randomLocationsArray removeAllObjects];
 }
@@ -436,27 +403,26 @@
 
 }
 
-
-#pragma mark - Managing the detail item
-
-- (void)setDetailItem:(id)newDetailItem
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-	
-        [self configureView];
-    }
-	
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }
-}
-
-- (void)configureView
-{
-	if (self.detailItem) {
-	    self.detailDescriptionLabel.text = [self.detailItem description];
+	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
+		return nil;
 	}
+	
+	if([overlay isKindOfClass:[MKPolygon class]]){
+		MKPolygonRenderer *polygonRenderer = [[MKPolygonRenderer alloc] initWithPolygon:overlay];
+//		MKPolygonView *polyView = [[MKPolygonView alloc] initWithPolygon:(MKPolygon*)overlay];
+		polygonRenderer.fillColor = [[UIColor orangeColor] colorWithAlphaComponent:0.2];
+		polygonRenderer.strokeColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+		polygonRenderer.lineWidth = 1;
+		return polygonRenderer;
+	}
+	
+	MKPolylineRenderer *renderer =
+	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
+	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
+	renderer.lineWidth = 3.0;
+	return renderer;
 }
 
 #pragma mark - Split view
