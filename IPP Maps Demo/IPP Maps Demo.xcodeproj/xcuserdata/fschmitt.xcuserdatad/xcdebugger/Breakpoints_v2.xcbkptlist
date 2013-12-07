@@ -337,7 +337,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "537"
             endingLineNumber = "537"
-            landmarkName = "-triggerDirection:"
+            landmarkName = "-setTravelMode:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -399,8 +399,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "541"
             endingLineNumber = "541"
-            landmarkName = "-triggerDirection:"
-            landmarkType = "5">
+            landmarkName = "@implementation IPPMapKitViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -415,8 +415,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "524"
             endingLineNumber = "524"
-            landmarkName = "-setDestination:"
-            landmarkType = "5">
+            landmarkName = "@implementation IPPMapKitViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -431,8 +431,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "481"
             endingLineNumber = "481"
-            landmarkName = "-splitViewController:willHideViewController:withBarButtonItem:forPopoverController:"
-            landmarkType = "5">
+            landmarkName = "@implementation IPPMapKitViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

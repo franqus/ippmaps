@@ -434,6 +434,30 @@
 	
     return nil;
 
+    return nil;
+
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
+{
+	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
+		return nil;
+	}
+	
+	if([overlay isKindOfClass:[MKPolygon class]]){
+		MKPolygonRenderer *polygonRenderer = [[MKPolygonRenderer alloc] initWithPolygon:overlay];
+//		MKPolygonView *polyView = [[MKPolygonView alloc] initWithPolygon:(MKPolygon*)overlay];
+		polygonRenderer.fillColor = [[UIColor orangeColor] colorWithAlphaComponent:0.2];
+		polygonRenderer.strokeColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+		polygonRenderer.lineWidth = 1;
+		return polygonRenderer;
+	}
+	
+	MKPolylineRenderer *renderer =
+	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
+	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
+	renderer.lineWidth = 3.0;
+	return renderer;
 }
 
 //- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
