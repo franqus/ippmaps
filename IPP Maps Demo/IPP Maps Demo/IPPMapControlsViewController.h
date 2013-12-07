@@ -25,7 +25,6 @@
 -(void)goToRandomLocation:(UIButton*)sender withTextView:(UITextView*)textView;
 -(BOOL)goToLocation:(NSString*)search withTextView:(UITextView*)textView;
 
-
 @end
 
 @interface IPPMapControlsViewController : UITableViewController <UISplitViewControllerDelegate, UITextFieldDelegate>

@@ -22,37 +22,20 @@
 	IPPMapKitPopverViewController* popoverVC;
 	UIPopoverController* directionsPopoverController;
 	MKDirectionsRequest* directionRequest;
+
+	IPPMapKitAnnotation* randomLocationAnnot;
+	IPPCampus* campus;
+
 	NSMutableArray* directionsArray;
 	NSMutableArray* directionsAnnotationArray;
-//	UIView* controlContainerView;
-//	UISegmentedControl* mapTypeControl;
-//	UISwitch* scrollControl;
-//	UISwitch* zoomControl;
-//	UISwitch* rotationControl;
-//	UISwitch* pitchControl;
-//	UISwitch* buildingsControl;
-//	UISwitch* poisControl;
-//	UISwitch* userLocationControl;
-//	UISwitch* annotationControl;
-//	UISwitch* customAnnotationControl;
-//	UISwitch* overlaysControl;
-	UIButton* goToRandomLocationControl;
-	UITextView* randomLocationTextView;
-//
-//	UITextField* searchTextfield;
-	
-	IPPMapKitAnnotation* randomLocationAnnot;
-	
-	
 	NSMutableArray* universityAnnotationsArray;
 	NSMutableArray* companyAnnotationsArray;
 	NSMutableArray* overlaysArray;
 	NSMutableArray* randomLocationsArray;
-	
-	IPPCampus* campus;
+	CLGeocoder* geocoder;
+
 }
 
-@property (strong, nonatomic) id detailItem;
-
-@property (weak, nonatomic) UILabel *detailDescriptionLabel;
+//@property (strong, nonatomic) id detailItem;
+//@property (weak, nonatomic) UILabel *detailDescriptionLabel;
 @end

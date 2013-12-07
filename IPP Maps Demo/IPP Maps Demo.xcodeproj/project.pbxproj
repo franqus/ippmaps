@@ -17,7 +17,6 @@
 		404CA288180D6B01001ADE13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CA287180D6B01001ADE13 /* main.m */; };
 		404CA28C180D6B01001ADE13 /* IPPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CA28B180D6B01001ADE13 /* IPPAppDelegate.m */; };
 		404CA28E180D6B02001ADE13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 404CA28D180D6B02001ADE13 /* Images.xcassets */; };
-		404CA2AC180D6B3C001ADE13 /* IPPMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CA2AB180D6B3C001ADE13 /* IPPMainViewController.m */; };
 		404CA2BE180D757F001ADE13 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA2BD180D757F001ADE13 /* CoreData.framework */; };
 		404CA2C0180D7587001ADE13 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA2BF180D7587001ADE13 /* AVFoundation.framework */; };
 		404CA2C2180D75A7001ADE13 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404CA2C1180D75A7001ADE13 /* CoreLocation.framework */; };
@@ -63,8 +62,6 @@
 		404CA28B180D6B01001ADE13 /* IPPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPPAppDelegate.m; sourceTree = "<group>"; };
 		404CA28D180D6B02001ADE13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		404CA294180D6B02001ADE13 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		404CA2AA180D6B3C001ADE13 /* IPPMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPMainViewController.h; sourceTree = "<group>"; };
-		404CA2AB180D6B3C001ADE13 /* IPPMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPMainViewController.m; sourceTree = "<group>"; };
 		404CA2BD180D757F001ADE13 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		404CA2BF180D7587001ADE13 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		404CA2C1180D75A7001ADE13 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -170,8 +167,6 @@
 			children = (
 				404CA28A180D6B01001ADE13 /* IPPAppDelegate.h */,
 				404CA28B180D6B01001ADE13 /* IPPAppDelegate.m */,
-				404CA2AA180D6B3C001ADE13 /* IPPMainViewController.h */,
-				404CA2AB180D6B3C001ADE13 /* IPPMainViewController.m */,
 				40A4D3B9182B6AE500677996 /* IPPMapControlsViewController.h */,
 				40A4D3BA182B6AE500677996 /* IPPMapControlsViewController.m */,
 				404DA0801833542C00E96919 /* IPPMapKitViewController */,
@@ -331,7 +326,6 @@
 				404DA09A1833542C00E96919 /* IPPCampusOverlay.m in Sources */,
 				402B3A9E183BCFD700D804D9 /* IPPMapKitPopverViewController.m in Sources */,
 				404DA0911833542C00E96919 /* IPPMapKitAnnotation.m in Sources */,
-				404CA2AC180D6B3C001ADE13 /* IPPMainViewController.m in Sources */,
 				40A4D3BB182B6AE500677996 /* IPPMapControlsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,15 +426,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/IPP Maps Demo/Frameworks\"/**",
-					"\"$(SRCROOT)/IPP Maps Demo/Frameworks/MapControl\"/**",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPP Maps Demo/IPP Maps Demo-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "IPP Maps Demo/IPP Maps Demo-Info.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/IPP Maps Demo/Frameworks/MapControl\"/**";
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -456,15 +447,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/IPP Maps Demo/Frameworks\"/**",
-					"\"$(SRCROOT)/IPP Maps Demo/Frameworks/MapControl\"/**",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPP Maps Demo/IPP Maps Demo-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "IPP Maps Demo/IPP Maps Demo-Info.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/IPP Maps Demo/Frameworks/MapControl\"/**";
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",

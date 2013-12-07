@@ -15,7 +15,6 @@
 
 @interface IPPMapKitViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
 @end
 
 @implementation IPPMapKitViewController
@@ -27,19 +26,16 @@
         
         // Custom initialization
 		[self setTitle:@"IPP Maps"];
-		[self.tabBarItem setImage:[UIImage imageNamed:@"MapKit_Logo"]];
-		[self.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MapKit_Logo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 				
+		// init directions popover
 		UIBarButtonItem *popoverBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Direction" style:UIBarButtonItemStylePlain target:self action:@selector(directionsPopoverBtn_tapped:)];
-		//initWithBarButtonSystemItem:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
-		
 		[self.navigationItem setRightBarButtonItem:popoverBarButtonItem animated:YES];
-		//[[UIBarButtonItem alloc] initWithCustomView:popOverButton] animated:YES];
 		
 		self->directionRequest = [[MKDirectionsRequest alloc] init];
 
 		
 		self->mapView = [[MKMapView alloc] initWithFrame: self.view.frame];
+		
 		
 		//init mapView with location of Mannheim
 		CLLocationCoordinate2D coord = {.latitude =  49.470843, .longitude =  8.480973};
@@ -51,6 +47,11 @@
 		[self->mapView setRegion:region];
 		[self->mapView setDelegate:self];
 		[self.view addSubview:self->mapView];
+		
+		
+		CLLocationCoordinate2D center = CLLocationCoordinate2DMake(52.519981,13.404944);
+		MKCircle *circle = [MKCircle circleWithCenterCoordinate:center radius:200000];
+		[self->mapView addOverlay:circle];
 		
 		// Some default annotations
 		IPPMapKitAnnotation *hsMannheimAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D: CLLocationCoordinate2DMake(49.469268,8.483334) andTitle:@"HS Mannheim"];
@@ -66,7 +67,6 @@
 		[self->mapView addAnnotation:cambridgeAnnot];
 		
 		self->universityAnnotationsArray = [[NSMutableArray alloc] initWithObjects:hsMannheimAnnot, stanfordAnnot, mitAnnot, cambridgeAnnot, nil];
-		
 		
 		// Some custom annotations
 		IPPMapKitCustomAnnotation *hollywoodSign = [[IPPMapKitCustomAnnotation alloc] initWithCLLocationCoordinate2D: CLLocationCoordinate2DMake(34.133973,-118.32177) andTitle:@"Hollywood" andImage:[UIImage imageNamed:@"LosAngeles"]];
@@ -126,43 +126,6 @@
 	
 	}
     return self;
-}
-
--(void)directionsPopoverBtn_tapped:(UIBarButtonItem*)sender{
-	
-	self->popoverVC = [[IPPMapKitPopverViewController alloc] init];
-	[self->popoverVC setDelegate:self];
-	
-	self->directionsPopoverController = [[UIPopoverController alloc] initWithContentViewController:self->popoverVC];
-	[self->directionsPopoverController setDelegate:self];
-	[self->directionsPopoverController setPopoverContentSize:CGSizeMake(240, 120) animated:YES];
-	[self->directionsPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-}
-
--(void)showRoute:(MKDirectionsResponse *)response
-{
-    for (MKRoute *route in response.routes)
-    {
-        [self->mapView
-		 addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-    }
-}
-
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
-{
-	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
-		return nil;
-	}
-	
-	if([overlay isKindOfClass:[MKPolygon class]]){
-		return nil;
-	}
-	
-	MKPolylineRenderer *renderer =
-	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
-	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
-	renderer.lineWidth = 3.0;
-	return renderer;
 }
 
 -(void)changeMapType:(UISegmentedControl*)sender{
@@ -241,7 +204,10 @@
 
 -(void)goToRandomLocation:(UIButton*)sender withTextView:(UITextView *)textView{
 	
-	CLGeocoder* geocoder = [[CLGeocoder alloc] init];
+	if(self->geocoder == nil)
+    {
+        self->geocoder = [[CLGeocoder alloc] init];
+    }
 	
 	float lat_low_bound = -90;
 	float lat_high_bound = 90;
@@ -257,12 +223,19 @@
 	
 	CLLocation* location = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
 	[geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+
+		if (error){
+			NSLog(@"Geocode failed with error: %@", error);
+			return;
+			
+		}
+		
 		if(placemarks){
 			CLPlacemark* placemark = [[CLPlacemark alloc] initWithPlacemark:[placemarks firstObject]];
 			NSDictionary* addressDict = [placemark addressDictionary];
 			NSLog(@"addressDict = %@", addressDict);
 
-			if ([addressDict objectForKey:@"City"]) {
+//			if ([addressDict objectForKey:@"City"]) {
 				self->randomLocationAnnot = [[IPPMapKitAnnotation alloc] initWithCLLocationCoordinate2D:coord andTitle:[placemark name]];
 				
 				[self->mapView setRegion:region animated:YES];
@@ -280,9 +253,9 @@
 									[addressDict objectForKey:@"SubLocality"],
 									[addressDict objectForKey:@"ZIP"]
 									]];
-			}else{
-				[self goToRandomLocation:self->goToRandomLocationControl withTextView:textView];
-			}
+//			}else{
+//				[self goToRandomLocation:sender withTextView:textView];
+//			}
 		}else{
 			[textView setText:@"The Internet connection appears to be offline."];
 		}
@@ -354,6 +327,17 @@
 	
 }
 
+-(void)directionsPopoverBtn_tapped:(UIBarButtonItem*)sender{
+	
+	self->popoverVC = [[IPPMapKitPopverViewController alloc] init];
+	[self->popoverVC setDelegate:self];
+	
+	self->directionsPopoverController = [[UIPopoverController alloc] initWithContentViewController:self->popoverVC];
+	[self->directionsPopoverController setDelegate:self];
+	[self->directionsPopoverController setPopoverContentSize:CGSizeMake(240, 120) animated:YES];
+	[self->directionsPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -370,7 +354,6 @@
 #pragma mark -
 #pragma mark MKMapViewDelegate methods
 -(void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
-	[self->randomLocationTextView setText:@""];
 	[self->mapView removeAnnotations:self->randomLocationsArray];
 	[self->randomLocationsArray removeAllObjects];
 }
@@ -416,6 +399,7 @@
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
+	
 	if ([overlay isKindOfClass:[MKPolygon class]])
 	{
 		MKPolygonView *polyView = [[MKPolygonView alloc] initWithPolygon:(MKPolygon*)overlay];
@@ -425,39 +409,66 @@
 		return polyView;
 	}
 	
-    if ([overlay isKindOfClass:IPPCampusOverlay.class]) {
+    if ([overlay isKindOfClass:[IPPCampusOverlay class]]) {
         UIImage *magicMountainImage = [UIImage imageNamed:@"Campus_ov"];
         IPPCampusOverlayView *overlayView = [[IPPCampusOverlayView alloc] initWithOverlay:overlay overlayImage:magicMountainImage];
 		
         return overlayView;
     }
 	
+	if ([overlay isKindOfClass:[MKCircle class]]) {
+		MKCircleView* circleView = [[MKCircleView alloc] initWithCircle:overlay];
+		circleView.strokeColor = [UIColor redColor];
+		circleView.fillColor = [UIColor whiteColor];
+		circleView.lineWidth = 1;
+		circleView.alpha = 0.5;
+		return circleView;
+	}
+	
+	if ([overlay isKindOfClass:[MKPolyline class]]) {
+		MKPolylineView* lineView = [[MKPolylineView alloc] initWithPolyline:overlay];
+		lineView.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
+		lineView.lineWidth = 3;
+		return lineView;
+	}
+	
     return nil;
 
 }
 
-
-#pragma mark - Managing the detail item
-
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-	
-        [self configureView];
-    }
-	
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }
-}
-
-- (void)configureView
-{
-	if (self.detailItem) {
-	    self.detailDescriptionLabel.text = [self.detailItem description];
-	}
-}
+//- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
+//{
+//	if([overlay isKindOfClass:[IPPCampusOverlay class]]){
+//		MKOverlayRenderer* renderer = [[MKOverlayRenderer alloc] initWithOverlay:overlay];
+//		[self mapView:mapView viewForOverlay:overlay];
+////		UIImage *magicMountainImage = [UIImage imageNamed:@"Campus_ov"];
+////		IPPCampusOverlayView *overlayView = [[IPPCampusOverlayView alloc] initWithOverlay:overlay overlayImage:magicMountainImage];
+////		[renderer overlay]
+////		
+//		
+//		return renderer;
+//	}
+//	
+//	if([overlay isKindOfClass:[MKPolygon class]]){
+//		MKPolygonRenderer* renderer = [[MKPolygonRenderer alloc] initWithPolygon:overlay];
+//		renderer.fillColor = [[UIColor orangeColor] colorWithAlphaComponent:0.2];
+//		renderer.strokeColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+//		renderer.lineWidth = 1;
+//		return renderer;
+//	}
+//	
+//	if([overlay isKindOfClass:[MKCircle class]]){
+//		MKCircleRenderer* renderer = [[MKCircleRenderer alloc] initWithCircle:overlay];
+//		renderer.strokeColor = [UIColor redColor];
+//		return renderer;
+//	}
+//	
+//	MKPolylineRenderer *renderer =
+//	[[MKPolylineRenderer alloc] initWithOverlay:overlay];
+//	renderer.strokeColor = [UIColor colorWithRed:0/255.0f green:38/255.0f blue:255/255.0f alpha:1.0f];
+//	renderer.lineWidth = 3.0;
+//	return renderer;
+//}
 
 #pragma mark - Split view
 
