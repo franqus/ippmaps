@@ -38,10 +38,11 @@
 		
 		
 		//init mapView with location of Mannheim
-		CLLocationCoordinate2D coord = {.latitude =  49.470843, .longitude =  8.480973};
+		//49.477606,8.473371
+		CLLocationCoordinate2D coord = {.latitude =  49.477606, .longitude =  8.473371};
         
-//		MKCoordinateSpan span = {.latitudeDelta =  0.01, .longitudeDelta =  0.001};
-		MKCoordinateSpan span = {.latitudeDelta =  100, .longitudeDelta =  100};
+		MKCoordinateSpan span = {.latitudeDelta =  0.03, .longitudeDelta =  0.03};
+//		MKCoordinateSpan span = {.latitudeDelta =  100, .longitudeDelta =  100};
 
 		MKCoordinateRegion region = {coord, span};
 		[self->mapView setRegion:region];
