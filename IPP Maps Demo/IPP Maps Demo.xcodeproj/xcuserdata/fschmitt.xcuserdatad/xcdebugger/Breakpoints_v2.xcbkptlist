@@ -332,12 +332,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
-            timestampString = "408119863.887099"
+            timestampString = "408281873.899209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "537"
-            endingLineNumber = "537"
-            landmarkName = "-setTravelMode:"
+            startingLineNumber = "536"
+            endingLineNumber = "536"
+            landmarkName = "-setSource:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -394,11 +394,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
-            timestampString = "408119863.887099"
+            timestampString = "408281873.899209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
+            landmarkName = "-setSource:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
+            timestampString = "408281873.899209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
+            landmarkName = "-setTravelMode:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
+            timestampString = "408281873.899209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "@implementation IPPMapKitViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -410,43 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
-            timestampString = "408119863.887099"
+            timestampString = "408281873.899209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
-            landmarkName = "@implementation IPPMapKitViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
-            timestampString = "408119863.887099"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
-            landmarkName = "@implementation IPPMapKitViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
-            timestampString = "408119863.887099"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "489"
-            endingLineNumber = "489"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
             landmarkName = "@implementation IPPMapKitViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -527,6 +527,22 @@
                   offsetFromSymbolStart = "86">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IPP Maps Demo/IPPMapKitViewController/IPPMapKitViewController.m"
+            timestampString = "408282004.883592"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
+            landmarkName = "-mapView:viewForOverlay:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
